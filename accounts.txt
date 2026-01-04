@@ -1,0 +1,2 @@
+1002,Shagun,50000.0,1979,Account opened with $80000.0;Withdrew: $30000.0
+1001,Rishita,30000.0,1234,Account opened with $30000.0
