@@ -4,7 +4,7 @@ public class BankSystem {
     // Database credentials
     private final String url = "jdbc:mysql://localhost:3306/banking_system";
     private final String user = "root";
-    private final String password = "#Rishita08!"; // Change to your MySQL password
+    private final String password = "your_password"; // Change to your MySQL password
 
     public BankSystem() {
         try {
