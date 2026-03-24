@@ -1,31 +1,65 @@
-# 🏦 Secure Bank Management System (Pro Version)
+# 🏦 Banking Management System (Java + MySQL)
 
-A robust, console-based banking application built with **Java**. This project simulates a real-world banking environment, focusing on secure transactions, administrative oversight, and data persistence.
+A robust, console-based Banking Application developed as part of the **Placement Preparation** for technical roles at **Philips** and **LG Soft India**. This project demonstrates the integration of **Java SE** with **MySQL Database** using **JDBC**.
 
-## 🚀 Key Features
-- **Account Management**: Create unique accounts with personalized names and starting balances.
-- **PIN-Based Security**: Every transaction (Withdrawal, Transfer, Balance Check) requires a 4-digit PIN for authentication.
-- **Fund Transfers**: Securely move money between two accounts with real-time balance validation.
-- **Administrative Dashboard**: A hidden, password-protected mode for bank managers to view all account details and total bank assets.
-- **Data Persistence**: Uses **File I/O** to save all account details and transaction history to a local `accounts.txt` file.
-- **Transaction Auditing**: Every account maintains a private ledger of all past deposits, withdrawals, and transfers.
-- **Robust Error Handling**: Prevents system crashes from invalid user inputs using try-catch blocks.
+## 🛠️ Project Tech Stack
+- **Language:** Java 17+ (Current: JDK 24)
+- **Database:** MySQL 8.0
+- **Driver:** MySQL Connector/J 9.x
+- **IDE:** VS Code
 
-## 🛠️ Technical Implementation
-- **Java Collections Framework**: Utilized `HashMap` for account storage to achieve **O(1) search efficiency**.
-- **Role-Based Access Control**: Implemented separate access levels for Customers (PIN) and Admins (Password).
-- **Object-Oriented Programming (OOP)**: 
-    - **Encapsulation**: Account data is kept private and modified only through secure methods.
-    - **Abstraction**: Separated the data model (`Account.java`) from the business logic (`BankSystem.java`).
-- **File Handling**: Custom logic for parsing and writing complex strings to maintain state across sessions.
+---
 
-## 📂 Project Structure
-- `Main.java`: The interactive command-line interface, menu handler, and entry point.
-- `BankSystem.java`: The "Engine" of the project. Manages account logic, admin reporting, and File I/O operations.
-- `Account.java`: The data model representing a single bank user and their transaction ledger.
+## 🗄️ Database Configuration (MySQL)
+Execute the following commands in **MySQL Workbench** before running the Java application. This sets up the schema and ensures data integrity.
 
-## 💻 How to Run
-1. Clone this repository to your local machine.
-2. Compile the Java files:
-   ```bash
-   javac *.java
+```sql
+-- 1. Create the Database
+CREATE DATABASE IF NOT EXISTS banking_system;
+USE banking_system;
+
+-- 2. Create the Accounts Table
+CREATE TABLE IF NOT EXISTS accounts (
+    account_number VARCHAR(20) PRIMARY KEY,
+    holder_name VARCHAR(100) NOT NULL,
+    balance DOUBLE DEFAULT 0.0,
+    pin INT NOT NULL
+);
+
+-- 3. Create the Transactions Table (Audit Log)
+CREATE TABLE IF NOT EXISTS transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    account_number VARCHAR(20),
+    description VARCHAR(255),
+    amount DOUBLE,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_number) REFERENCES accounts(account_number) ON DELETE CASCADE
+);
+🚀 Setup & Installation Instructions
+1. Folder Structure
+Ensure your files are in the root folder for easy compilation:
+
+Plaintext
+The Bank Management System/
+├── Main.java             # Entry point & User Menu
+├── BankSystem.java       # JDBC Logic & SQL Queries
+├── Account.java          # POJO Data Model
+└── lib/                  # Put mysql-connector-j-9.x.jar here
+2. Configure Java Classpath
+In VS Code, go to the Java Projects view (bottom-left).
+
+Click Referenced Libraries ➔ + (Plus Icon).
+
+Select the mysql-connector-j-9.x.jar file.
+
+3. Update Credentials
+Open BankSystem.java and update these lines with your local MySQL details:
+
+Java
+private final String url = "jdbc:mysql://localhost:3306/banking_system";
+private final String user = "root";
+private final String password = "YOUR_MYSQL_PASSWORD";
+4. Run the App
+Open Main.java and click Run.
+
+Use the console to Open Account, Deposit, Withdraw, or check Balance.
